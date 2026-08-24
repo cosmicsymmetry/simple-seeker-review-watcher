@@ -23,6 +23,48 @@ For a group, add both your bot and @getmyid_bot to the group and send a message 
 
 Never paste your bot token into a chat, an issue, or a terminal transcript you plan to share. @getmyid_bot never needs it.
 
+## Deploy with an AI coding agent
+
+If you use Claude Code, Codex, Cursor, or a similar agent, clone the repository, open it in the agent, and paste the prompt below. It handles the mechanical parts and hands the credential steps back to you, because no coding agent should be typing your portal password.
+
+```text
+Read README.md, then deploy this Cloudflare Worker to my own Cloudflare account.
+
+1. Run `npm install`, then `npm run typecheck && npm test`. Stop and tell me if
+   either fails.
+2. Run `npx wrangler whoami`. If I am not logged in, stop and ask me to run
+   `npx wrangler login` myself, because it opens a browser.
+3. Run `npx wrangler kv namespace create REVIEW_WATCH`. Take the id from the
+   output and use it to replace REPLACE_WITH_YOUR_KV_NAMESPACE_ID in
+   wrangler.jsonc. Do not rename the binding; the code looks for REVIEW_WATCH.
+4. Secrets. Do not ask me to type any secret into this conversation, do not read
+   one back to me, and do not write one into any file. Print these commands and
+   let me run them myself, one at a time, each of which prompts for its value:
+       npx wrangler secret put PORTAL_EMAIL
+       npx wrangler secret put PORTAL_PASSWORD
+       npx wrangler secret put TELEGRAM_BOT_TOKEN
+       npx wrangler secret put TELEGRAM_CHAT_ID
+   Then wait for me to confirm. If I do not have a Telegram bot token or chat id
+   yet, walk me through the "Create a Telegram bot" section of README.md first.
+5. Run `npx wrangler deploy`. Report the workers.dev URL and confirm the cron
+   trigger was registered.
+6. Verify. Curl the workers.dev URL; it should return plain text that includes
+   the line "last run: never". Then run `npx wrangler tail` and wait for the
+   next 20-minute tick.
+7. Tell me what that run logged. "seeded state" means it worked: the first run
+   saves a snapshot silently and the first Telegram alert arrives on the next
+   actual change. If it logged an error instead, diagnose it using the
+   Troubleshooting section of README.md and tell me what to fix.
+
+Rules: never print, echo, log, or commit a secret value. Do not commit or push
+anything. If a step needs a browser or an interactive password prompt, hand it
+back to me instead of trying to automate it.
+```
+
+The agent cannot complete steps 2 and 4 for you by design. Cloudflare login is a browser OAuth flow, and `wrangler secret put` reads its value from an interactive prompt, so your password and bot token go straight from your keyboard to Cloudflare without passing through the agent's context.
+
+If you would rather do it yourself, the same deploy is written out manually below.
+
 ## Deploy step by step
 
 Clone the repository and install its development dependencies:
