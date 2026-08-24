@@ -1,0 +1,20 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "simple-seeker-review-watcher",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-08-24",
+  "triggers": {
+    "crons": ["*/20 * * * *"]
+  },
+  "vars": {
+    // Optional. Leave blank to auto-discover an account with exactly one dApp.
+    "DAPP_ID": ""
+  },
+  "kv_namespaces": [
+    {
+      // Run `npx wrangler kv namespace create REVIEW_WATCH`, then paste its id here.
+      "binding": "REVIEW_WATCH",
+      "id": "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
+    }
+  ]
+}

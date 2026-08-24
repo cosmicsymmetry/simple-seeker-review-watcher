@@ -1,0 +1,21 @@
+{
+  "name": "simple-seeker-review-watcher",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --test-scheduled",
+    "deploy": "wrangler deploy",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260823.1",
+    "typescript": "^5.9.2",
+    "vitest": "^2.1.9",
+    "wrangler": "^4.125.0"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

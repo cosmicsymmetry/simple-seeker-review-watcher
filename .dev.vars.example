@@ -1,0 +1,18 @@
+# Copy this file to .dev.vars for `npm run dev`. Wrangler reads .dev.vars only
+# during local development. The real .dev.vars file is gitignored.
+
+# Publisher portal login. Set both values so an expired JWT can be replaced
+# automatically. A signIn Left can also mean rate limiting, not just bad login.
+PORTAL_EMAIL=publisher@example.com
+PORTAL_PASSWORD=replace-with-your-portal-password
+
+# Optional manual bootstrap JWT. Cached KV token wins; email/password can mint
+# and refresh tokens unattended, so most deployments should leave this unset.
+# PORTAL_JWT=replace-with-a-temporary-portal-jwt
+
+# Telegram bot token from @BotFather and the numeric destination chat id.
+TELEGRAM_BOT_TOKEN=123456789:AAExampleTokenThatIsNotReal
+TELEGRAM_CHAT_ID=123456789
+
+# Optional protection for POST /run. When unset, that route returns 404.
+# TRIGGER_TOKEN=replace-with-a-long-random-string
