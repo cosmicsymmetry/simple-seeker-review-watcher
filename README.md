@@ -16,20 +16,12 @@ The first successful run saves the current state without sending a review-change
 1. Open [@BotFather](https://t.me/BotFather) in Telegram.
 2. Send `/newbot` and follow the prompts.
 3. Copy the bot token. It looks like `123456789:AA...`. Treat it as a password.
-4. Open your new bot and send it a message such as `/start`.
-5. Replace the fake token below and run:
+4. Open your new bot and send it `/start`. A Telegram bot cannot message you until you have started a chat with it, so do not skip this step.
+5. Open [@getmyid_bot](https://t.me/getmyid_bot) and send it any message. It replies with your numeric id. That number is `TELEGRAM_CHAT_ID`.
 
-   ```bash
-   curl "https://api.telegram.org/bot123456789:AA_REPLACE_ME/getUpdates"
-   ```
+For a group, add both your bot and @getmyid_bot to the group and send a message there. @getmyid_bot reports the group's chat id, which begins with a minus sign, such as `-1001234567890`. Keep the minus sign. You can remove @getmyid_bot from the group afterwards, but your own bot has to stay.
 
-6. Find `message.chat.id` in the JSON response. That integer is `TELEGRAM_CHAT_ID`. For example:
-
-   ```json
-   {"message":{"chat":{"id":123456789,"type":"private"}}}
-   ```
-
-For a group, add the bot to the group, send a message that mentions it, run `getUpdates` again, and use the negative `message.chat.id`, such as `-1001234567890`. If the result is empty, send another message to the bot and retry. Do not paste your real token into an issue or terminal transcript you plan to share.
+Never paste your bot token into a chat, an issue, or a terminal transcript you plan to share. @getmyid_bot never needs it.
 
 ## Deploy step by step
 
@@ -202,7 +194,7 @@ Run `npx wrangler tail`, wait for a poll, and copy the intended id from the logg
 
 ### Telegram returns HTTP 400
 
-The bot token was accepted, but the request data was not. The usual cause is a wrong chat id or a bot that has not been added to the target group. Repeat the `getUpdates` method above and make sure group ids retain their leading minus sign.
+The bot token was accepted, but the request data was not. The usual cause is a wrong chat id or a bot that has not been added to the target group. Ask @getmyid_bot for the id again and make sure a group id keeps its leading minus sign.
 
 ### Telegram returns HTTP 401
 
