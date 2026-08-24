@@ -25,10 +25,13 @@ Never paste your bot token into a chat, an issue, or a terminal transcript you p
 
 ## Deploy with an AI coding agent
 
-If you use Claude Code, Codex, Cursor, or a similar agent, clone the repository, open it in the agent, and paste the prompt below. It handles the mechanical parts and hands the credential steps back to you, because no coding agent should be typing your portal password.
+If you use Claude Code, Codex, Cursor, or a similar agent, paste the prompt below into a session opened in any empty directory. It clones the repository itself, handles the mechanical parts, and hands the credential steps back to you, because no coding agent should be typing your portal password.
 
 ```text
-Read README.md, then deploy this Cloudflare Worker to my own Cloudflare account.
+Clone https://github.com/cosmicsymmetry/simple-seeker-review-watcher into a new
+directory, cd into it, and read README.md. If that directory already exists,
+use it and pull the latest commit instead of cloning again. Then deploy the
+Worker to my own Cloudflare account:
 
 1. Run `npm install`, then `npm run typecheck && npm test`. Stop and tell me if
    either fails.
