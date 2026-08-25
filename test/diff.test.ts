@@ -84,4 +84,19 @@ describe("formatting", () => {
     expect(alert.body).not.toContain("event 11");
     expect(alert.body).toMatch(/…and 2 more$/);
   });
+
+  it("seeds a dApp that has no reviews yet, where the portal rating is null", () => {
+    // Observed live: a freshly created dApp returns rating: null with an empty window.
+    const result = deriveChanges(null, summary({ rating: null, reviewsByRating: [] }), []);
+    expect(result.seeded).toBe(true);
+    expect(result.events).toEqual([]);
+    expect(result.state.summary_total).toBe(0);
+    expect(result.state.rating).toBeNull();
+  });
+
+  it("renders a null rating in the alert title without printing null", () => {
+    expect(formatAlert(["NEW  5\u2605 alice.skr: first one"], null).title).toBe(
+      "Seeker Review Watch: 1 review change(s), avg unknown",
+    );
+  });
 });

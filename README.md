@@ -127,6 +127,8 @@ The output includes a `workers.dev` URL and confirms the cron trigger. Visiting 
 
 Leave `DAPP_ID` as an empty string in `wrangler.jsonc` when your publisher account has exactly one dApp. The Worker calls the publisher portal's authenticated `listDapps` procedure and selects that dApp automatically.
 
+Note that `listDapps` returns every dApp on the account, including empty drafts and unpublished submissions. A leftover test entry with zero reviews still counts, so auto-discovery is less often available than you might expect. It never guesses: it fails with the full list instead, and pinning `DAPP_ID` is the normal end state. Pinning it also drops each run from four portal requests to three.
+
 When the account has several dApps, the run log names every choice as `name=id`. Read it with:
 
 ```bash
@@ -232,6 +234,16 @@ A `Left` response does not prove the password is wrong. The portal also uses it 
 ### No dApps found
 
 Confirm that the login belongs to the publisher account that owns the dApp. If the portal lists it but auto-discovery does not, set its id explicitly as `DAPP_ID` in `wrangler.jsonc` and redeploy.
+
+### Authentication fails and the credentials look correct
+
+A secret may be set but empty. `wrangler secret put` accepts empty input and still reports success, and secrets are write-only, so there is no way to read one back and check it. An empty `PORTAL_PASSWORD` produces the same `Left` response as a wrong one. If you piped a value in from a script or a paste that may have been truncated, set the secret again interactively and watch for the prompt to accept a non-empty value:
+
+```bash
+npx wrangler secret put PORTAL_PASSWORD
+```
+
+If you script the upload, assert the value is non-empty before piping it, not after.
 
 ### Multiple dApps found
 

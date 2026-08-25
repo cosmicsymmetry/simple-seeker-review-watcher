@@ -63,7 +63,9 @@ export interface PortalReview {
 }
 
 export interface ReviewSummary {
-  rating: number;
+  // null when the dApp has no reviews yet: the portal returns rating: null,
+  // observed live against a freshly created dApp with zero reviews.
+  rating: number | null;
   replyCount: number;
   reviewsByRating: number[];
 }
@@ -89,7 +91,7 @@ export interface SeenReview {
 export interface ReviewState {
   summary_total: number;
   reply_count: number;
-  rating: number;
+  rating: number | null;
   seen: Record<string, SeenReview>;
 }
 

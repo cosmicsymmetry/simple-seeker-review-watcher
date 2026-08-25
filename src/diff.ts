@@ -105,11 +105,11 @@ export function deriveChanges(
   };
 }
 
-export function formatAlert(events: string[], rating: number): AlertText {
+export function formatAlert(events: string[], rating: number | null): AlertText {
   const displayed = events.slice(0, 10);
   const remainder = events.length - displayed.length;
   return {
-    title: `Seeker Review Watch: ${events.length} review change(s), avg ${rating}`,
+    title: `Seeker Review Watch: ${events.length} review change(s), avg ${rating ?? "unknown"}`,
     body: displayed.join("\n") + (remainder > 0 ? `\n…and ${remainder} more` : ""),
   };
 }
